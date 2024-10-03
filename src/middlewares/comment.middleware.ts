@@ -68,6 +68,28 @@ export const commentMiddleware = {
     next();
   },
 
+  deleteCommentReply: async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void | any> => {
+    const { replyId } = req.body;
+    const { commentId } = req.params;
+
+    if (!commentId || !replyId) {
+      return res.status(400).json(
+        API_RESPONSES.error({
+          commentId: commentId ? undefined : "commentId is required",
+          replyId: replyId ? undefined : "replyId is required",
+          error_type: "Validation Error",
+          message: "All Fields are required",
+        })
+      );
+    }
+
+    next();
+  },
+
   updateComment: async (
     req: Request,
     res: Response,

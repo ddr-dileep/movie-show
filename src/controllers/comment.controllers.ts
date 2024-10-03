@@ -266,4 +266,66 @@ export const commentContoller = {
       res.status(404).json(API_RESPONSES.error(error));
     }
   },
+
+  deleteReplyOfComment: async (
+    req: Request | any,
+    res: Response
+  ): Promise<any> => {
+    try {
+      const { replyId } = req.body;
+      const { commentId } = req.params;
+
+      const comment = await Comment.findById(commentId);
+      if (!comment) {
+        return res.status(404).json(
+          API_RESPONSES.error({
+            message: "Comment not found or deleted",
+            error_type: "not found",
+          })
+        );
+      }
+
+      const replyIndex = comment?.replies?.findIndex(
+        (reply: any) => reply?._id?.toString() === replyId.toString()
+      );
+
+      if (replyIndex === -1) {
+        return res.status(404).json(
+          API_RESPONSES.error({
+            message: "Reply not found or deleted",
+            error_type: "not found",
+          })
+        );
+      }
+
+      if (
+        comment.replies[replyIndex].user.toString() !== req.user?.id.toString()
+      ) {
+        return res.status(401).json(
+          API_RESPONSES.error({
+            message: "Unauthorized to delete reply",
+            error_type: "authentication error",
+          })
+        );
+      }
+
+      comment.replies.splice(replyIndex, 1);
+      await comment.save();
+
+      res.json(
+        API_RESPONSES.success({
+          comment,
+          message: "Reply deleted successfully",
+        })
+      );
+    } catch (error) {
+      console.error("Error deleting reply:", error);
+      res.status(500).json(
+        API_RESPONSES.error({
+          message: "An error occurred while deleting the reply",
+          error_type: "internal server error",
+        })
+      );
+    }
+  },
 };
