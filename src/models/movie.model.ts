@@ -31,14 +31,14 @@ export interface IMovie extends Document {
 
 const movieSchema: Schema<IMovie> = new Schema(
   {
-    title: { type: String, required: true },
+    title: { type: String, required: true, unique: true },
     description: { type: String, required: true },
     genre: [{ type: String }],
     uploadedBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
     movieUrl: { type: String, required: true },
-    posterUrl: { type: String },
+    posterUrl: { type: String, required: true },
     comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
-    reactions: [Reaction],
+    reactions: [{ type: Schema.Types.ObjectId, ref: "Reaction" }],
     views: { type: Number, default: 0 },
     ratings: {
       totalStars: { type: Number, default: 0 },
