@@ -6,6 +6,7 @@ import { authTokenMiddleware } from "../utils/token";
 const commentRouter = Router();
 
 commentRouter.get("/get-all/:movieId", commentContoller.getAllCommentOfMovie);
+commentRouter.get("/get-one/:commentId", commentContoller.getOneComment);
 
 commentRouter.post(
   "/add-comment",
