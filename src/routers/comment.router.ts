@@ -5,13 +5,20 @@ import { authTokenMiddleware } from "../utils/token";
 
 const commentRouter = Router();
 
-commentRouter.get("/get-all/:id", commentContoller.getAllCommentOfMovie);
+commentRouter.get("/get-all/:movieId", commentContoller.getAllCommentOfMovie);
 
 commentRouter.post(
   "/add-comment",
   commentMiddleware.addComment,
   authTokenMiddleware,
   commentContoller.addComment
+);
+
+commentRouter.post(
+  "/add-reply/:commentId",
+  commentMiddleware.addCommentReply,
+  authTokenMiddleware,
+  commentContoller.addReplyToComment
 );
 
 export default commentRouter;
