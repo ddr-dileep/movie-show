@@ -15,4 +15,10 @@ movieRouter.post(
   movieContoller.createMovie
 );
 
+movieRouter.patch(
+  "/update/:id",
+  authTokenMiddleware,
+  movieContoller.updateMovie
+);
+
 export default movieRouter;
