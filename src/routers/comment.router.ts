@@ -9,7 +9,7 @@ commentRouter.get("/get-all/:movieId", commentContoller.getAllCommentOfMovie);
 commentRouter.get("/get-one/:commentId", commentContoller.getOneComment);
 
 commentRouter.post(
-  "/add-comment",
+  "/add",
   commentMiddleware.addComment,
   authTokenMiddleware,
   commentContoller.addComment
@@ -20,6 +20,13 @@ commentRouter.post(
   commentMiddleware.addCommentReply,
   authTokenMiddleware,
   commentContoller.addReplyToComment
+);
+
+commentRouter.patch(
+  "/update/:commentId",
+  commentMiddleware.updateComment,
+  authTokenMiddleware,
+  commentContoller.updateComment
 );
 
 export default commentRouter;

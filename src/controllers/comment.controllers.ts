@@ -138,4 +138,40 @@ export const commentContoller = {
       res.status(404).json(API_RESPONSES.error(error));
     }
   },
+
+  updateComment: async (req: Request | any, res: Response): Promise<any> => {
+    try {
+      const comment = await Comment.findById(req.params.commentId);
+      if (!comment) {
+        return res.status(404).json(
+          API_RESPONSES.error({
+            message: "Comment not found or deleted",
+            error_type: "not found",
+          })
+        );
+      }
+
+      if (comment.user.toString() !== req.user?.id.toString()) {
+        return res.status(401).json(
+          API_RESPONSES.error({
+            message: "Unauthorized to update comment",
+            error_type: "authentication error",
+          })
+        );
+      }
+
+      comment.content = req.body.content;
+      console.log("comment updated", comment);
+      await comment.save();
+
+      res.json(
+        API_RESPONSES.success({
+          comment,
+          message: "Comment updated successfully",
+        })
+      );
+    } catch (error) {
+      res.status(404).json(API_RESPONSES.error(error));
+    }
+  },
 };
