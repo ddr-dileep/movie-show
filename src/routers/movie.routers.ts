@@ -21,4 +21,10 @@ movieRouter.patch(
   movieContoller.updateMovie
 );
 
+movieRouter.delete(
+  "/delete/:id",
+  authTokenMiddleware,
+  movieContoller.deleteMovie
+);
+
 export default movieRouter;

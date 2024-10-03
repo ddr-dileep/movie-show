@@ -93,9 +93,52 @@ export const movieContoller = {
       if (!movie) {
         return res
           .status(404)
-          .json(API_RESPONSES.error({ message: "Movie not found" }));
+          .json(
+            API_RESPONSES.error({
+              message: "Movie not found",
+              error_type: "not found",
+            })
+          );
       }
       res.json(API_RESPONSES.success({ movie }));
+    } catch (error) {
+      res.status(400).json(API_RESPONSES.error(error));
+    }
+  },
+
+  deleteMovie: async (req: Request | any, res: Response): Promise<any> => {
+    try {
+      const user = await User.findById(req?.user?.id);
+      if (!user) {
+        return res.status(401).json(
+          API_RESPONSES.error({
+            message: "Unauthorized",
+            error_type: "Unauthorized",
+          })
+        );
+      }
+
+      if (!user.movies.includes(req.params.id)) {
+        return res.status(403).json(
+          API_RESPONSES.error({
+            message: "This movie is belonging to another user",
+            error_type: "unauthorized",
+          })
+        );
+      }
+
+      const movie = await Movie.findByIdAndDelete(req.params.id);
+      if (!movie) {
+        return res.status(404).json(
+          API_RESPONSES.error({
+            message: "Movie not found",
+            error_type: "not found",
+          })
+        );
+      }
+      res.json(
+        API_RESPONSES.success({ message: "Movie deleted successfully" })
+      );
     } catch (error) {
       res.status(400).json(API_RESPONSES.error(error));
     }
