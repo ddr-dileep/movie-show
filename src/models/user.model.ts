@@ -13,6 +13,7 @@ export interface IUser extends Document {
   favirateActors: Types.ObjectId[] | IActor[];
   favirateActresses: Types.ObjectId[] | IActor[];
   mostVisitedMovies: Types.ObjectId[] | IMovie[];
+  movies?: any;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -30,6 +31,7 @@ const userSchema: Schema<IUser> = new Schema(
     avatar: { type: String },
     bio: { type: String },
     favirateMovies: [{ type: Schema.Types.ObjectId, ref: "Movie" }],
+    movies: [{ type: Schema.Types.ObjectId, ref: "Movie" }],
     favirateActors: [{ type: Schema.Types.ObjectId, ref: "Actor" }],
     favirateActresses: [{ type: Schema.Types.ObjectId, ref: "Actor" }],
     mostVisitedMovies: [{ type: Schema.Types.ObjectId, ref: "Movie" }],
