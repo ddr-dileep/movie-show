@@ -25,7 +25,12 @@ export const movieContoller = {
       if (!movie) {
         return res
           .status(404)
-          .json(API_RESPONSES.error({ message: "Movie not found" }));
+          .json(
+            API_RESPONSES.error({
+              message: "Movie not found",
+              error_type: "not found",
+            })
+          );
       }
       res.json(API_RESPONSES.success({ movie }));
     } catch (error) {
