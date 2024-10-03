@@ -212,4 +212,58 @@ export const commentContoller = {
       res.status(404).json(API_RESPONSES.error(error));
     }
   },
+
+  updateReplyOfComment: async (
+    req: Request | any,
+    res: Response
+  ): Promise<any> => {
+    try {
+      const { content, replyId } = req.body;
+      const { commentId } = req.params;
+
+      const comment: any = await Comment.findById(commentId);
+      if (!comment) {
+        return res.status(404).json(
+          API_RESPONSES.error({
+            message: "Comment not found or deleted",
+            error_type: "not found",
+          })
+        );
+      }
+
+      const replyIndex = comment?.replies?.findIndex(
+        (reply: any) => reply?._id?.toString() === replyId.toString()
+      );
+      if (replyIndex === -1) {
+        return res.status(404).json(
+          API_RESPONSES.error({
+            message: "Reply not found or deleted",
+            error_type: "not found",
+          })
+        );
+      }
+
+      if (
+        comment.replies[replyIndex].user.toString() !== req.user?.id.toString()
+      ) {
+        return res.status(401).json(
+          API_RESPONSES.error({
+            message: "Unauthorized to update reply",
+            error_type: "authentication error",
+          })
+        );
+      }
+
+      comment.replies[replyIndex].content = content;
+      await comment.save();
+      res.json(
+        API_RESPONSES.success({
+          comment,
+          message: "Reply updated successfully",
+        })
+      );
+    } catch (error) {
+      res.status(404).json(API_RESPONSES.error(error));
+    }
+  },
 };

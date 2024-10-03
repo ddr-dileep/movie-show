@@ -35,4 +35,11 @@ commentRouter.delete(
   commentContoller.deleteComment
 );
 
+commentRouter.patch(
+  "/update-reply/:commentId",
+  commentMiddleware.updateCommentReply,
+  authTokenMiddleware,
+  commentContoller.updateReplyOfComment
+);
+
 export default commentRouter;
