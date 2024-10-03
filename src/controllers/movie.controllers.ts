@@ -91,14 +91,12 @@ export const movieContoller = {
         { new: true }
       );
       if (!movie) {
-        return res
-          .status(404)
-          .json(
-            API_RESPONSES.error({
-              message: "Movie not found",
-              error_type: "not found",
-            })
-          );
+        return res.status(404).json(
+          API_RESPONSES.error({
+            message: "Movie not found",
+            error_type: "not found",
+          })
+        );
       }
       res.json(API_RESPONSES.success({ movie }));
     } catch (error) {
@@ -136,6 +134,11 @@ export const movieContoller = {
           })
         );
       }
+
+      // remove the movie from the user's model
+      user?.movies.pull(movie?._id);
+      await user.save();
+
       res.json(
         API_RESPONSES.success({ message: "Movie deleted successfully" })
       );
