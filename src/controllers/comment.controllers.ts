@@ -174,4 +174,42 @@ export const commentContoller = {
       res.status(404).json(API_RESPONSES.error(error));
     }
   },
+
+  deleteComment: async (req: Request | any, res: Response): Promise<any> => {
+    try {
+      const comment: any = await Comment.findById(req.params.commentId);
+      if (!comment) {
+        return res.status(404).json(
+          API_RESPONSES.error({
+            message: "Comment not found or deleted",
+            error_type: "not found",
+          })
+        );
+      }
+
+      if (comment.user.toString() !== req.user?.id.toString()) {
+        return res.status(401).json(
+          API_RESPONSES.error({
+            message: "Unauthorized to delete comment",
+            error_type: "authentication error",
+          })
+        );
+      }
+
+      await Comment.findByIdAndDelete(req.params.commentId);
+      await Movie.findByIdAndUpdate(
+        comment.movie,
+        { $pull: { comments: comment._id } },
+        { new: true }
+      );
+
+      res.json(
+        API_RESPONSES.success({
+          message: "Comment deleted successfully",
+        })
+      );
+    } catch (error) {
+      res.status(404).json(API_RESPONSES.error(error));
+    }
+  },
 };
