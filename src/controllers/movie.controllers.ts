@@ -146,4 +146,30 @@ export const movieContoller = {
       res.status(400).json(API_RESPONSES.error(error));
     }
   },
+
+  getMoviesOfUser: async (req: Request | any, res: Response): Promise<any> => {
+    try {
+      const user = await User.findById(req.user.id);
+      if (!user) {
+        return res.status(404).json(
+          API_RESPONSES.error({
+            message: "User not found",
+            error_type: "not found",
+          })
+        );
+      }
+
+      const movies = await Movie.find({ uploadedBy: user?._id });
+
+      res.json(
+        API_RESPONSES.success({
+          count: movies?.length,
+          movies,
+          message: "Movies featched successfully",
+        })
+      );
+    } catch (error) {
+      res.status(500).json(API_RESPONSES.error(error));
+    }
+  },
 };
