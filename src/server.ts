@@ -9,6 +9,33 @@ import swaggerJsDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import swaggerOptions from "./configs/swaggerConfig";
 
+// Custom CSS styles as a string
+const customCss = `
+  .swagger-ui .topbar {
+      display: none; /* Hide the header */
+  }
+  .swagger-ui .opblock-tag {
+      font-size: 1.2em; /* Change font size of operation tags */
+      font-weight: bold; /* Make operation tags bold */
+      font-style: italic; /*
+  }
+  .swagger-ui .opblock {
+      border: 1px solid #ddd; /* Change border color of operations */
+      border-radius: 3px; /* Rounded corners */
+  }
+`;
+
+const swaggerOption = {
+  customCss,
+  swaggerOptions: {
+    // Change the UI settings
+    docExpansion: "none", // Options: 'none', 'full', 'list'
+    defaultModelsExpandDepth: -1, // To hide models section
+    tagsSorter: "alpha", // Sort tags alphabetically
+    operationsSorter: "alpha", // Sort operations alphabetically
+  },
+};
+
 config();
 const APP_PORT = process.env.APP_PORT || 8000;
 const app = express();
@@ -21,7 +48,11 @@ app.use("/api/v1", rootRouter);
 
 // Initialize swagger-jsdoc and swagger-ui
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocs, swaggerOption)
+);
 
 // if some path is not specified then
 app.use((req: express.Request, res: express.Response) => {
