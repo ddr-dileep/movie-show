@@ -27,3 +27,9 @@ actorRouter.patch(
   authTokenMiddleware,
   actorContoller.updateActor
 );
+
+actorRouter.delete(
+  "/delete/:actorId",
+  authTokenMiddleware,
+  actorContoller.deleteActor
+);
