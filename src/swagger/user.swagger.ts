@@ -129,6 +129,7 @@ export const userSwagger = {
       },
     },
   },
+
   "/user/login": {
     post: {
       tags: ["User"],
@@ -171,6 +172,31 @@ export const userSwagger = {
               },
             },
           },
+        },
+      },
+    },
+  },
+
+  "/user/get-info": {
+    get: {
+      tags: ["User"],
+      summary: "Get user information",
+      description: "API to get user information using a Bearer token.",
+      security: [
+        {
+          BearerAuth: [],
+        },
+      ],
+      responses: {
+        "200": {
+        //   description: "User information retrieved successfully ![User Response Example](https://miro.medium.com/v2/resize:fit:1400/0*w0dh2xBvElRc51bm.png)",
+          description: "User information retrieved successfully",
+        },
+        "401": {
+          description: "Unauthorized (Invalid or missing token)",
+        },
+        "500": {
+          description: "Server error",
         },
       },
     },
