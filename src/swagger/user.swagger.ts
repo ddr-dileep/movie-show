@@ -129,4 +129,50 @@ export const userSwagger = {
       },
     },
   },
+  "/user/login": {
+    post: {
+      tags: ["User"],
+      summary: "Login a user",
+      description:
+        "Authenticates a user and returns a token if the login is successful.",
+      requestBody: {
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                email: { type: "string", example: "john@example.com" },
+                password: { type: "string", example: "password123" },
+              },
+              required: ["email", "password"],
+            },
+          },
+        },
+      },
+      responses: {
+        200: {
+          description: "User logged in successfully.",
+        },
+        400: {
+          description: "Invalid credentials.",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: {
+                  success: { type: "boolean", example: false },
+                  message: { type: "string", example: "Invalid credentials" },
+                  error_type: {
+                    type: "string",
+                    example: "authentication error",
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
 };
