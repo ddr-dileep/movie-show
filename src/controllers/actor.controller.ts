@@ -48,4 +48,24 @@ export const actorContoller = {
       res.status(500).json(API_RESPONSES.error(error));
     }
   },
+
+  getActorById: async (req: Request, res: Response): Promise<any> => {
+    try {
+      const actor = await Actor.findById(req?.params?.actorId);
+      if (!actor) {
+        return res
+          .status(404)
+          .json(API_RESPONSES.error({ message: "Actor not found" }));
+      }
+
+      res.status(200).json(
+        API_RESPONSES.success({
+          actor,
+          message: "Actor fetched successfully",
+        })
+      );
+    } catch (error) {
+      res.status(404).json(API_RESPONSES.error(error));
+    }
+  },
 };
