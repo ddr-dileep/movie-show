@@ -43,4 +43,27 @@ export const actorMiddleware = {
 
     next();
   },
+
+  update: async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void | any> => {
+    const { name, image, birthdate, gender } = req.body;
+
+    if (!name || !image || !birthdate || !gender) {
+      return res.status(400).json(
+        API_RESPONSES.error({
+          name: name ? undefined : "name is required",
+          image: image ? undefined : "image is required",
+          birthdate: birthdate ? undefined : "birthdate is required",
+          gender: gender ? undefined : "gender is required",
+          message: "All Fields are required",
+          error_type: "validation error",
+        })
+      );
+    }
+
+    next();
+  },
 };

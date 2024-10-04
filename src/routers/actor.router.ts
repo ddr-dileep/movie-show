@@ -20,3 +20,10 @@ actorRouter.post(
   authTokenMiddleware,
   actorContoller.createActor
 );
+
+actorRouter.patch(
+  "/update/:actorId",
+  actorMiddleware.update,
+  authTokenMiddleware,
+  actorContoller.updateActor
+);

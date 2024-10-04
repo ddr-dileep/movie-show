@@ -81,4 +81,35 @@ export const actorContoller = {
       res.status(404).json(API_RESPONSES.error(error));
     }
   },
+  updateActor: async (req: Request | any, res: Response): Promise<any> => {
+    try {
+      const actor: any = await Actor.findById(req.params.actorId);
+
+      if (!actor) {
+        return res
+          .status(404)
+          .json(API_RESPONSES.error({ message: "Actor not found" }));
+      }
+
+      // update the actor if it created by the same createBy key or user
+      if (actor.createdBy.toString() !== req.user?.id) {
+        return res.status(401).json(
+          API_RESPONSES.error({
+            message: "Unauthorized to update actor",
+            error_type: "authentication error",
+          })
+        );
+      }
+
+      await Actor.findByIdAndUpdate(actor._id, req.body, { new: true });
+      res.status(200).json(
+        API_RESPONSES.success({
+          actor,
+          message: "Actor updated successfully",
+        })
+      );
+    } catch (error) {
+      res.status(404).json(API_RESPONSES.error(error));
+    }
+  },
 };
