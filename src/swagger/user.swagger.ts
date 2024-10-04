@@ -95,4 +95,38 @@ export const userSwagger = {
       },
     },
   },
+
+  "/user/register": {
+    post: {
+      tags: ["User"],
+      summary: "Register a new user",
+      description:
+        "Creates a new user in the system by registering their details.",
+      requestBody: {
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                username: { type: "string", example: "john_doe" },
+                email: { type: "string", example: "john@example.com" },
+                password: { type: "string", example: "password123" },
+                role: { type: "string", example: "user" },
+              },
+              required: ["username", "email", "password"],
+            },
+          },
+        },
+      },
+      responses: {
+        200: {
+          description: "User successfully registered.",
+        },
+        400: {
+          description: "Bad request, invalid or missing user data.",
+        },
+      },
+    },
+  },
 };
