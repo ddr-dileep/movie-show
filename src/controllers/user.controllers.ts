@@ -14,6 +14,7 @@ export const userContoller = {
           {
             path: "reactions",
             populate: { path: "user", select: "username email" },
+            select: "user type"
           },
         ],
       });
