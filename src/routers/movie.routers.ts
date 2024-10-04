@@ -27,6 +27,16 @@ movieRouter.delete(
   movieContoller.deleteMovie
 );
 
-movieRouter.get("/my-movies", authTokenMiddleware, movieContoller.getMoviesOfUser);
+movieRouter.get(
+  "/my-movies",
+  authTokenMiddleware,
+  movieContoller.getMoviesOfUser
+);
+
+movieRouter.get(
+  "/reaction/:movieId",
+  authTokenMiddleware,
+  movieContoller.addReaction
+);
 
 export default movieRouter;
