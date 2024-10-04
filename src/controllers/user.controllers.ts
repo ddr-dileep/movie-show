@@ -46,17 +46,19 @@ export const userContoller = {
 
   registerUser: async (req: Request, res: Response) => {
     try {
-      const user = await User.create({
+      const user: any = new User({
         ...req.body,
         password: await hashPassword(req.body.password),
       });
 
-      res.json(
-        API_RESPONSES.success({
-          user: { ...user, password: undefined },
-          message: "User created successfully",
-        })
-      );
+      await user.save();
+      (user["password"] = undefined),
+        res.json(
+          API_RESPONSES.success({
+            user,
+            message: "User created successfully",
+          })
+        );
     } catch (error) {
       res.status(400).json(API_RESPONSES.error(error));
     }
