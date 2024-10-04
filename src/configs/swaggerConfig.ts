@@ -30,12 +30,22 @@ const swaggerOptions: Options = {
           "APIs related to user operations (e.g., registration, login, get-user)",
       },
       {
-        name: "Chat",
-        description: "APIs related to Chat",
+        name: "Movie",
+        description: "APIs related to Movie",
       },
       {
-        name: "Message",
-        description: "APIs related to Message",
+        name: "Comment",
+        description: "APIs related to Comment",
+      },
+      {
+        name: "Reaction",
+        description:
+          "APIs related to reaction operations (e.g., like/dislikes)",
+      },
+      {
+        name: "Actors",
+        description:
+          "APIs related to Actors",
       },
     ],
     components: {
