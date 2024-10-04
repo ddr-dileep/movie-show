@@ -34,7 +34,7 @@ export interface IActor extends Document {
 
 const actorSchema: Schema<IActor> = new Schema(
   {
-    name: { type: String, required: true },
+    name: { type: String, required: true, unique: true },
     birthdate: { type: Date, required: true },
     bio: { type: String },
     nationality: { type: String },
