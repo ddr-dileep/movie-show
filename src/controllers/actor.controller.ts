@@ -68,4 +68,17 @@ export const actorContoller = {
       res.status(404).json(API_RESPONSES.error(error));
     }
   },
+
+  createActor: async (req: Request | any, res: Response): Promise<any> => {
+    try {
+      const createdBy = req?.user?.id;
+      const actor = new Actor({ ...req.body, createdBy });
+
+      await actor.save();
+
+      res.status(201).json(API_RESPONSES.success({ actor }));
+    } catch (error) {
+      res.status(404).json(API_RESPONSES.error(error));
+    }
+  },
 };

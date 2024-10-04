@@ -24,8 +24,6 @@ export interface IActor extends Document {
   instagram?: string;
   twitter: { type: String };
   facebook: { type: String };
-  linkedin: { type: String };
-  pinterest: { type: String };
   email: { type: String };
   phone: { type: String };
   address: { type: String };
@@ -44,7 +42,7 @@ const actorSchema: Schema<IActor> = new Schema(
     height: { type: Number },
     weight: { type: Number },
     image: { type: String, required: true },
-    gender: { type: String, required: true },
+    gender: { type: String, required: true, enum: ["male", "female"] },
     occupation: { type: String },
     birthPlace: { type: String },
     died: { type: Date },
@@ -55,8 +53,6 @@ const actorSchema: Schema<IActor> = new Schema(
     instagram: { type: String },
     twitter: { type: String },
     facebook: { type: String },
-    linkedin: { type: String },
-    pinterest: { type: String },
     email: { type: String },
     phone: { type: String },
     address: { type: String },
