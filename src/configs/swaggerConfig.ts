@@ -5,10 +5,10 @@ const swaggerOptions: Options = {
   swaggerDefinition: {
     openapi: "3.0.0",
     info: {
-      title: "SMS API Documentation",
+      title: "Movie API Documentation",
       version: "1.0.0",
       description:
-        "API documentation for SMS stands for Short Message Service, and it's a messaging service that allows users to send short messages to other devices",
+        "This API provides access to the latest movie quotes, along with relevant information such as rating, author, author bio, and movie name. \n\n\n![User Response Example](https://miro.medium.com/v2/resize:fit:1400/0*w0dh2xBvElRc51bm.png)",
     },
     servers: [
       {
