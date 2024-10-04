@@ -7,7 +7,16 @@ import { generateToken } from "../utils/token";
 export const userContoller = {
   getAllUsers: async (req: Request, res: Response) => {
     try {
-      const users = await User.find();
+      const users = await User.find().populate({
+        path: "movies",
+        select: "title posterUrl",
+        populate: [
+          {
+            path: "reactions",
+            populate: { path: "user", select: "username email" },
+          },
+        ],
+      });
       res.json(
         API_RESPONSES.success({
           count: users.length,
