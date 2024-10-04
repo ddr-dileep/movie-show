@@ -18,70 +18,6 @@ export const userSwagger = {
                     type: "string",
                     example: "User fetched successfully",
                   },
-                  data: {
-                    type: "object",
-                    properties: {
-                      count: { type: "integer", example: 5 },
-                      users: {
-                        type: "array",
-                        items: {
-                          type: "object",
-                          properties: {
-                            _id: {
-                              type: "string",
-                              example: "60d0fe4f5311236168a109ca",
-                            },
-                            username: { type: "string", example: "john_doe" },
-                            email: {
-                              type: "string",
-                              example: "john@example.com",
-                            },
-                            movies: {
-                              type: "array",
-                              items: {
-                                type: "object",
-                                properties: {
-                                  title: {
-                                    type: "string",
-                                    example: "Inception",
-                                  },
-                                  posterUrl: {
-                                    type: "string",
-                                    example: "https://poster.url/inception.jpg",
-                                  },
-                                  reactions: {
-                                    type: "array",
-                                    items: {
-                                      type: "object",
-                                      properties: {
-                                        user: {
-                                          type: "object",
-                                          properties: {
-                                            username: {
-                                              type: "string",
-                                              example: "jane_doe",
-                                            },
-                                            email: {
-                                              type: "string",
-                                              example: "jane@example.com",
-                                            },
-                                          },
-                                        },
-                                        reactionType: {
-                                          type: "string",
-                                          example: "like",
-                                        },
-                                      },
-                                    },
-                                  },
-                                },
-                              },
-                            },
-                          },
-                        },
-                      },
-                    },
-                  },
                 },
               },
             },
@@ -97,6 +33,60 @@ export const userSwagger = {
                   success: { type: "boolean", example: false },
                   message: { type: "string", example: "Failed to fetch users" },
                   error: { type: "string", example: "Error details" },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+
+  "/user/get-one/{id}": {
+    get: {
+      tags: ["User"],
+      summary: "Get a user by ID",
+      description: "Fetches a single user by their unique ID.",
+      parameters: [
+        {
+          name: "id",
+          in: "path",
+          required: true,
+          description: "The ID of the user to retrieve.",
+          schema: {
+            type: "string",
+            example: "66fbc58ffb3206c8029c52c8",
+          },
+        },
+      ],
+      responses: {
+        200: {
+          description: "The user was successfully retrieved.",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: {
+                  success: { type: "boolean", example: true },
+                  message: {
+                    type: "string",
+                    example: "User fetched successfully",
+                  },
+                },
+              },
+            },
+          },
+        },
+        404: {
+          description: "User not found.",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: {
+                  success: { type: "boolean", example: false },
+                  message: { type: "string", example: "User not found" },
+                  error_type: { type: "string", example: "invalid details" },
                 },
               },
             },
