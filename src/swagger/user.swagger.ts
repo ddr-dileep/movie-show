@@ -189,11 +189,61 @@ export const userSwagger = {
       ],
       responses: {
         "200": {
-        //   description: "User information retrieved successfully ![User Response Example](https://miro.medium.com/v2/resize:fit:1400/0*w0dh2xBvElRc51bm.png)",
+          //   description: "User information retrieved successfully ![User Response Example](https://miro.medium.com/v2/resize:fit:1400/0*w0dh2xBvElRc51bm.png)",
           description: "User information retrieved successfully",
         },
         "401": {
           description: "Unauthorized (Invalid or missing token)",
+        },
+        "500": {
+          description: "Server error",
+        },
+      },
+    },
+  },
+
+  "/user/update": {
+    patch: {
+      tags: ["User"],
+      summary: "Update user information",
+      description: "API to update user information using a Bearer token.",
+      security: [
+        {
+          BearerAuth: [],
+        },
+      ],
+      requestBody: {
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                username: {
+                  type: "string",
+                  example: "newusername",
+                },
+                email: {
+                  type: "string",
+                  example: "newemail@example.com",
+                },
+              },
+            },
+          },
+        },
+      },
+      responses: {
+        "200": {
+          description: "User information updated successfully",
+        },
+        "400": {
+          description: "Bad request (validation errors or missing data)",
+        },
+        "401": {
+          description: "Unauthorized (Invalid or missing token)",
+        },
+        "404": {
+          description: "Not found (User not found)",
         },
         "500": {
           description: "Server error",
