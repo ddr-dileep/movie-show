@@ -24,7 +24,27 @@ export const movieContoller = {
 
   getOneMovie: async (req: Request, res: Response): Promise<any> => {
     try {
-      const movie = await Movie.findById(req.params.id);
+      const movie = await Movie.findById(req.params.id)
+        .populate({
+          path: "uploadedBy",
+          select: "username email role",
+        })
+        .populate({
+          path: "comments",
+          select: "user movie content replies createdAt updatedAt",
+          populate: {
+            path: "user",
+            select: "username email",
+          },
+        })
+        .populate({
+          path: "reactions",
+          select: "user type",
+          populate: {
+            path: "user",
+            select: "username email",
+          },
+        });
       if (!movie) {
         return res.status(404).json(
           API_RESPONSES.error({
