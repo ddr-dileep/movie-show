@@ -53,7 +53,7 @@ export const Home = () => {
               />
               <div className="home_page-movies-card-footer">
                 <h2>{movie.title}</h2>
-                <p>{movie?.updatedAt?.slice(0, 4)}</p>
+                <p>{movie?.createdAt?.slice(0, 4)}</p>
               </div>
             </div>
           ))}

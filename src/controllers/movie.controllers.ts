@@ -7,7 +7,9 @@ import { Reaction } from "../models/reaction.model";
 export const movieContoller = {
   getAllMovies: async (req: Request, res: Response) => {
     try {
-      const movies = await Movie.find();
+      const movies = await Movie.find().select(
+        "_id title posterUrl isPublished createdAt"
+      );
       res.json(
         API_RESPONSES.success({
           count: movies?.length,
