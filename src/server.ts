@@ -8,6 +8,7 @@ import databaseConnection from "./configs/db-config";
 import swaggerJsDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import swaggerOptions from "./configs/swaggerConfig";
+import cors from "cors";
 
 // Custom CSS styles as a string
 const customCss = `
@@ -43,6 +44,7 @@ const app = express();
 app.use(express.json());
 // app.use(trackClientInfo);
 app.use(morgan("combined"));
+app.use(cors());
 
 app.use("/api/v1", rootRouter);
 
