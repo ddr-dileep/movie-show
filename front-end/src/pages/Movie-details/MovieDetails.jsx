@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { BASE_API_URL } from "../../constants/config";
 import { toast } from "react-toastify";
+import Loader from "../../components/loader/Loader";
 
 const MovieDetails = () => {
   const { movieId } = useParams();
   const [isLoading, setIsLoading] = useState(true);
+  const [movie, setMovie] = useState(null);
 
   useEffect(() => {
-    const fetchMovies = async () => {
+    const fetchMovie = async () => {
       const response = await fetch(`${BASE_API_URL}/movie/get-one/${movieId}`, {
         method: "GET",
         headers: {
@@ -17,17 +19,17 @@ const MovieDetails = () => {
       });
       const data = await response.json();
       if (data.success) {
-        // setMovies(data?.data?.movies);
+        setMovie(data?.data?.movies);
         setIsLoading(false);
         toast.success(data.message);
       }
     };
 
-    fetchMovies();
+    fetchMovie();
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   return (

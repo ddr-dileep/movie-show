@@ -3,6 +3,7 @@ import "./style.scss";
 import { BASE_API_URL } from "../../constants/config";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../components/loader/Loader";
 
 export const Home = () => {
   const [movies, setMovies] = useState([]);
@@ -34,7 +35,7 @@ export const Home = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   return (
