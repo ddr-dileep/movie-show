@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./style.scss";
 import { BASE_API_URL } from "../../constants/config";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -28,7 +30,7 @@ export const Home = () => {
 
   const handleClickMovie = async (movieId) => {
     toast.success(`Clicked on ${movieId}`);
-    // Add your own logic to handle movie click here
+    navigate(`/movie/${movieId}`);
   };
 
   if (isLoading) {
